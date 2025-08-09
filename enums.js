@@ -1,0 +1,934 @@
+// FIFA Ultimate Team Enums Module
+// This module contains all the enumeration definitions used throughout the application
+
+"use strict";
+
+// Mark as ES module
+Object.defineProperty(exports, "__esModule", { value: true });
+
+// Initialize all exports
+exports.UISquadPitchEventEnum =
+exports.SearchCategoryGroupEnum =
+exports.AppNotificationEnum =
+exports.SBCEligibilityKeyEnum =
+exports.PlayerTraitEnum =
+exports.ItemRatingTierEnum =
+exports.AcademyStatTypeEnum =
+exports.AcademyEligibilityAttributeEnum =
+exports.AcademyEligibilityTypeEnum =
+exports.AcademyTraitEnum =
+exports.AcademySlotStateEnum =
+exports.SquadItemTypeEnum =
+exports.PurchasePackTypeEnum =
+exports.DeviceEnum =
+exports.ItemViewSizeEnum =
+exports.RewardTypeEnum =
+exports.ItemAssetType =
+exports.TradeAccessLevelEnum =
+exports.SearchBucketEnum =
+exports.UtasErrorCodeEnum =
+exports.SearchSortTypeEnum =
+exports.SearchSortIDEnum =
+exports.SearchSortOrderEnum =
+exports.AcademyEligibilityScopeEnum =
+exports.EligibilityScopeEnum =
+exports.LoaderTypeEnum =
+exports.SearchTypeEnum =
+exports.ItemSearchFeatureEnum =
+exports.SearchCategoryEnum =
+exports.UISearchFilters =
+exports.UISortOptionType =
+exports.UIDialogOptions =
+exports.PopupType =
+exports.UTGameCurrency =
+exports.ItemSubTypeEnum =
+exports.ItemTypeEnum =
+exports.SearchLevelEnum =
+exports.UINotificationTypeEnum =
+exports.UTItemPileEnum =
+exports.EventTypeEnum = void 0;
+
+/**
+ * Event types for UI interactions
+ */
+exports.EventTypeEnum = {
+  TAP: "tap",
+  CHANGE: "change",
+  INPUT: "input",
+  KEYDOWN: "keydown",
+  CLICK: "click"
+};
+
+/**
+ * Item pile locations in Ultimate Team
+ */
+exports.UTItemPileEnum = {
+  ANY: 0,
+  CLUB: 7,
+  GIFT: 9,
+  INBOX: 8,
+  STORAGE: 10,
+  PURCHASED: 6,
+  TRANSFER: 5
+};
+
+/**
+ * UI notification types
+ */
+exports.UINotificationTypeEnum = {
+  NEGATIVE: 2,
+  NEUTRAL: 1,
+  POSITIVE: 0
+};
+
+/**
+ * Search level filters
+ */
+exports.SearchLevelEnum = {
+  ANY: "any",
+  BRONZE: "bronze",
+  GOLD: "gold",
+  SILVER: "silver",
+  SPECIAL: "SP"
+};
+
+/**
+ * Item types in the game
+ */
+exports.ItemTypeEnum = {
+  BADGE: "custom",
+  BALL: "ball",
+  BANNER: "banner",
+  CELEBRATION: "celebration",
+  HEALTH: "health",
+  KIT: "kit",
+  MANAGER: "manager",
+  MISC: "misc",
+  MYSTADIUM_TIER: "myStadium_tier",
+  NONE: "none",
+  PLAYER: "player",
+  STADIUM: "stadium",
+  TIFO: "tifo",
+  TRAINING: "training",
+  VANITY: "vanity"
+};
+
+/**
+ * Item sub-types with their numeric IDs
+ */
+exports.ItemSubTypeEnum = {
+  BADGE: 11,
+  BALL: 30,
+  COIN_BOOST: 238,
+  DRAFT_TOKEN: 236,
+  FREE_COINS: 231,
+  FREE_PACK: 233,
+  HEALING_ALL: 218,
+  KIT: 9,
+  MANAGER: 4,
+  MANAGERLEAGUE_DENMARK: 300,
+  MANAGERLEAGUE_RUSSIA: 343,
+  MORALE_PLAYER: 221,
+  MORALE_TEAM: 222,
+  NONE: 0,
+  PLAYER: 2,
+  PLAYER_PICK_ITEM: 237,
+  STADIUM: 10,
+  STADIUM_UPGRADE: 232,
+
+  // Manager Formation Training Items
+  TRAINING_MANAGER_FORMATION_343: 123,
+  TRAINING_MANAGER_FORMATION_352: 124,
+  TRAINING_MANAGER_FORMATION_433: 130,
+  TRAINING_MANAGER_FORMATION_442: 132,
+  TRAINING_MANAGER_FORMATION_451: 133,
+  TRAINING_MANAGER_FORMATION_532: 136,
+  TRAINING_MANAGER_FORMATION_3412: 121,
+  TRAINING_MANAGER_FORMATION_3421: 122,
+  TRAINING_MANAGER_FORMATION_4222: 127,
+  TRAINING_MANAGER_FORMATION_4231: 126,
+  TRAINING_MANAGER_FORMATION_4312: 128,
+  TRAINING_MANAGER_FORMATION_4321: 129,
+  TRAINING_MANAGER_FORMATION_4411: 131,
+  TRAINING_MANAGER_FORMATION_5212: 134,
+  TRAINING_MANAGER_FORMATION_5221: 135,
+  TRAINING_MANAGER_FORMATION_41212: 125,
+
+  // Player Style Training Items
+  TRAINING_PLAYERSTYLE_GENERAL_1: 250,
+  TRAINING_PLAYERSTYLE_GENERAL_2: 251,
+  TRAINING_PLAYERSTYLE_GENERAL_3: 252,
+  TRAINING_PLAYERSTYLE_GENERAL_4: 253,
+  TRAINING_PLAYERSTYLE_GENERAL_5: 254,
+  TRAINING_PLAYERSTYLE_GENERAL_6: 255,
+  TRAINING_PLAYERSTYLE_GENERAL_7: 256,
+  TRAINING_PLAYERSTYLE_GENERAL_8: 257,
+  TRAINING_PLAYERSTYLE_GENERAL_9: 258,
+  TRAINING_PLAYERSTYLE_GENERAL_10: 259,
+  TRAINING_PLAYERSTYLE_GENERAL_11: 260,
+  TRAINING_PLAYERSTYLE_GENERAL_12: 261,
+  TRAINING_PLAYERSTYLE_GENERAL_13: 262,
+  TRAINING_PLAYERSTYLE_GENERAL_14: 263,
+  TRAINING_PLAYERSTYLE_GENERAL_15: 264,
+  TRAINING_PLAYERSTYLE_GENERAL_16: 265,
+  TRAINING_PLAYERSTYLE_GENERAL_17: 266,
+  TRAINING_PLAYERSTYLE_GENERAL_18: 267,
+  TRAINING_PLAYERSTYLE_GENERAL_19: 268,
+  TRAINING_PLAYERSTYLE_GOALKEEPER_1: 269,
+  TRAINING_PLAYERSTYLE_GOALKEEPER_2: 270,
+  TRAINING_PLAYERSTYLE_GOALKEEPER_3: 271,
+  TRAINING_PLAYERSTYLE_GOALKEEPER_4: 272,
+  TRAINING_PLAYERSTYLE_GOALKEEPER_5: 273,
+
+  // Player Formation Training Items
+  TRAINING_PLAYER_FORMATION_343: 73,
+  TRAINING_PLAYER_FORMATION_352: 74,
+  TRAINING_PLAYER_FORMATION_433: 80,
+  TRAINING_PLAYER_FORMATION_442: 82,
+  TRAINING_PLAYER_FORMATION_451: 83,
+  TRAINING_PLAYER_FORMATION_532: 86,
+  TRAINING_PLAYER_FORMATION_3412: 71,
+  TRAINING_PLAYER_FORMATION_3421: 72,
+  TRAINING_PLAYER_FORMATION_4222: 77,
+  TRAINING_PLAYER_FORMATION_4231: 76,
+  TRAINING_PLAYER_FORMATION_4312: 78,
+  TRAINING_PLAYER_FORMATION_4321: 79,
+  TRAINING_PLAYER_FORMATION_4411: 81,
+  TRAINING_PLAYER_FORMATION_5212: 84,
+  TRAINING_PLAYER_FORMATION_5221: 85,
+  TRAINING_PLAYER_FORMATION_41212: 75,
+  TRAINING_PLAYER_POS: 600,
+
+  // Vanity Items
+  VANITY_AUDIO_ANTHEM_MUSIC: 516,
+  VANITY_AUDIO_CLUB_NICKNAME: 518,
+  VANITY_AUDIO_CROWD_CHANT: 519,
+  VANITY_AUDIO_GOAL_SCORE: 517,
+  VANITY_CROWD_CARDS: 523,
+  VANITY_PLAYER_CELEBRATION: 520,
+  VANITY_POLE_BANNER: 522,
+  VANITY_PYROTECHNICS_CONFETTI_CANNON: 512,
+  VANITY_PYROTECHNICS_FIREWORKS_CANNON: 514,
+  VANITY_PYROTECHNICS_FLAME_CANNON: 511,
+  VANITY_PYROTECHNICS_SPARKLER_CANNON: 513,
+  VANITY_STADIUM_BASE_PITCH_GOAL_PACKAGE: 507,
+  VANITY_STADIUM_BASE_PITCH_LINE_COLOR: 506,
+  VANITY_STADIUM_BASE_PITCH_MOW_PATTERN: 505,
+  VANITY_STADIUM_BASE_PITCH_PROP: 508,
+  VANITY_STADIUM_BASE_SEAT_COLOR: 510,
+  VANITY_STADIUM_BASE_STRUCTURE_COLOR: 509,
+  VANITY_STADIUM_THEME: 504,
+  VANITY_TIFO_BASE: 500,
+  VANITY_TIFO_BIG: 503,
+  VANITY_TIFO_MOVING: 525,
+  VANITY_TINTED_BANNER: 521,
+  VANITY_VIP_AREA: 524,
+  WC_PACK: 235
+};
+
+/**
+ * Game currency types
+ */
+exports.UTGameCurrency = {
+  COINS: "COINS",
+  POINTS: "POINTS",
+  DRAFT_TOKEN: "DRAFT_TOKEN",
+  STAR: "STAR"
+};
+
+/**
+ * Popup dialog types
+ */
+exports.PopupType = {
+  ALERT: "ea-dialog-view-type--alert",
+  MESSAGE: "ea-dialog-view-type--message",
+  ROTATE: "ea-dialog-view-type--rotate",
+  SAVE_FAILED: "ea-dialog-view-type--save-failed",
+  STANDARD: "ea-dialog-view-type--standard"
+};
+
+/**
+ * UI dialog button options
+ */
+exports.UIDialogOptions = {
+  OK: 2,
+  CANCEL: 3,
+  DISABLE: 8,
+  ENABLE: 7,
+  NO: 1,
+  RETRY: 4,
+  SIGN_OUT: 5,
+  TAKE_ME: 6,
+  YES: 0
+};
+
+/**
+ * UI sort option types
+ */
+exports.UISortOptionType = {
+  ACADEMY: "sort-academy",
+  CONCEPT: "build-concept",
+  DISCARD: "sort-discard",
+  EXCLUDE_LIMITED_USE: "sort-exclude-limited-use",
+  EXCLUDE_SQUAD: "sort-exclude-squad",
+  IGNORE_POSITION: "ignore-position",
+  REPLACE: "build-replace",
+  UNTRADEABLE: "sort-untradeable",
+  LOAN_FILTER_ID: "loanFilterId",
+  STORAGE_PLAYERS: "storagePlayers"
+};
+
+/**
+ * UI search filter types
+ */
+exports.UISearchFilters = {
+  AUTHENTICITY: "authenticity",
+  CLUB: "club",
+  LEAGUE: "league",
+  LEVEL: "level",
+  NATION: "nation",
+  PLAYSTYLE: "playStyle",
+  POSITION: "position",
+  POSITION_MOD: "positionMod",
+  PRIMARY_COLOR: "primaryColor",
+  RARITY: "rarity",
+  SECONDARY_COLOR: "secondaryColor",
+  TYPE: "type",
+  VANITY: "vanity",
+  VANITY_CATEGORY: "vanityCategory",
+  YEAR: "year"
+};
+
+/**
+ * Search category enumeration
+ */
+exports.SearchCategoryEnum = {
+  ANY: "any",
+  BADGE: "badge",
+  BALL: "ball",
+  COACH_FITNESS: "fitnessCoach",
+  COACH_GK: "GKCoach",
+  COACH_HEAD: "headCoach",
+  DEFID: "definitionId",
+  HEALING: "healing",
+  KIT: "kit",
+  MANAGER: "manager",
+  MANAGER_LEAGUE: "managerLeagueModifier",
+  MASKED_DEFID: "maskedDefId",
+  PHYSIO: "physio",
+  PLAYER_GK: "playerGK",
+  PLAYER_NO_GK: "noGK",
+  PLAYSTYLE: "playStyle",
+  POSITION: "position",
+  STADIUM: "stadium",
+  VANITY: "vanity",
+
+  // Vanity subcategories
+  VANITY_AUDIO_ANTHEM_MUSIC: "vaa",
+  VANITY_AUDIO_CLUB_NICKNAME: "van",
+  VANITY_AUDIO_CROWD_CHANT: "vac",
+  VANITY_AUDIO_GOAL_SCORE: "vag",
+  VANITY_CROWD_CARDS: "vcc",
+  VANITY_PLAYER_CELEBRATION: "vc",
+  VANITY_POLE_BANNER: "vpbn",
+  VANITY_PYROTECHNICS_CONFETTI_CANNON: "vpc",
+  VANITY_PYROTECHNICS_FIREWORKS_CANNON: "vpfw",
+  VANITY_PYROTECHNICS_FLAME_CANNON: "vpfl",
+  VANITY_PYROTECHNICS_SPARKLER_CANNON: "vpsp",
+  VANITY_STADIUM_BASE_PITCH_GOAL_PACKAGE: "vpgp",
+  VANITY_STADIUM_BASE_PITCH_LINE_COLOR: "vpl",
+  VANITY_STADIUM_BASE_PITCH_MOW_PATTERN: "vpmp",
+  VANITY_STADIUM_BASE_PITCH_PROP: "vpp",
+  VANITY_STADIUM_BASE_SEAT_COLOR: "vpst",
+  VANITY_STADIUM_BASE_STRUCTURE_COLOR: "vpb",
+  VANITY_STADIUM_THEME: "vt",
+  VANITY_TIFO_BASE: "vtb",
+  VANITY_TIFO_BIG: "vtg",
+  VANITY_TIFO_MOVING: "vmtt",
+  VANITY_TINTED_BANNER: "vtbn",
+  VANITY_VIP_AREA: "vva"
+};
+
+/**
+ * Item search feature types
+ */
+exports.ItemSearchFeatureEnum = {
+  ANY: "any",
+  CLUB: "club",
+  CONCEPT: "dream",
+  MARKET: "market",
+  STORAGE: "storage"
+};
+
+/**
+ * Search type categories
+ */
+exports.SearchTypeEnum = {
+  ANY: "any",
+  BALL: "ball",
+  CLUB_INFO: "clubInfo",
+  CONSUMABLES_DEVELOPMENT: "development",
+  CONSUMABLES_TRAINING: "training",
+  PLAYER: "player",
+  STADIUM: "stadium",
+  STAFF: "staff",
+  VANITY: "vanity"
+};
+
+/**
+ * Loader types for UI
+ */
+exports.LoaderTypeEnum = {
+  FULL: 0,
+  INTERACTION: 1,
+  LOADING: 2
+};
+
+/**
+ * Eligibility scope for requirements
+ */
+exports.EligibilityScopeEnum = {
+  GREATER: 0,
+  LOWER: 1,
+  EXACT: 2
+};
+
+/**
+ * Academy eligibility scope
+ */
+exports.AcademyEligibilityScopeEnum = {
+  MIN: 0,
+  MAX: 1,
+  EXACT: 2,
+  BETWEEN: 3
+};
+
+/**
+ * Search sort order
+ */
+exports.SearchSortOrderEnum = {
+  NONE: "NONE",
+  ASCENDING: "ASCENDING",
+  DESCENDING: "DESCENDING"
+};
+
+/**
+ * Search sort ID enumeration
+ */
+exports.SearchSortIDEnum = {
+  RATING_ASC: 3,
+  RATING_DESC: 2,
+  RECENCY_DESC: 4,
+  VALUE_ASC: 1,
+  VALUE_DESC: 0
+};
+
+/**
+ * Search sort types
+ */
+exports.SearchSortTypeEnum = {
+  RATING: "ovr",
+  RECENCY: "recent",
+  VALUE: "value"
+};
+
+/**
+ * UTAS error codes
+ */
+exports.UtasErrorCodeEnum = {
+  ACCOUNT_BANNED: 20000,
+  ACCOUNT_MISMATCH: 442,
+  CAPTCHA_REQUIRED: 458,
+  CARD_IN_TRADE: 476,
+  DELETING_LAST_SQUAD: 469,
+  DESTINATION_FULL: 473,
+  DEVICE_SUSPENDED: 491,
+  DID_CREATE_EXCEEDED: 489,
+  DID_LOGIN_EXCEEDED: 490,
+  DUPLICATE_ITEM_TYPE: 472,
+  GEOIP_DENIED: 20003,
+  INVALID_CREDENTIALS: 20002,
+  INVALID_DECK: 477,
+  INVALID_OWNER: 479,
+  ITEM_EXISTS: 471,
+  LOCKED_TRANSFER_MARKET: 494,
+  LOGGED_IN_ON_CONSOLE: 474,
+  LOGGED_IN_ON_CONSOLE_LEGACY: 468,
+  NAME_EXISTS: 466,
+  NOT_ENOUGH_CREDIT: 470,
+  NO_BID_TOKENS: 463,
+  NO_CARD_EXISTS: 475,
+  NO_TITLE_ID: 464,
+  NO_TRADE_EXISTS: 478,
+  NO_USER: 465,
+  PERMISSION_DENIED: 461,
+  PLAYER_HAS_RED_CARD: 486,
+  PROFANITY: 467,
+  REGION_MISMATCH: 440,
+  REMOVE_WATCH_FAILURE: 487,
+  SBC_EXPIRED: 492,
+  SERVICE_IS_DISABLED: 480,
+  SOME_ITEMS_NOT_FREE: 495,
+  STATE_INVALID: 462,
+  SWAP_ITEM_WITH_ITSELF: 488,
+  UNRECOVERABLE: 20004,
+  UPDATE_REQUIRED: 20001,
+  UT_BAD_REQUEST: 460,
+  CHEMISTRY_VERSION_MISMATCH: 446
+};
+
+/**
+ * Search bucket types
+ */
+exports.SearchBucketEnum = {
+  PLAYER: 0,
+  STAFF: 1,
+  CLUB: 2,
+  CONSUMABLE: 3
+};
+
+/**
+ * Trade access levels
+ */
+exports.TradeAccessLevelEnum = {
+  ALLOWED: 2,
+  BANNED: 1,
+  CONSOLE_ONLY: 3,
+  MAINTENANCE: 100,
+  NONE: 0,
+  UNAVAILABLE: 4
+};
+
+/**
+ * Item asset types
+ */
+exports.ItemAssetType = {
+  SHELL: "shell",
+  MAIN: "main",
+  FLAG: "flag",
+  BADGE: "badge",
+  RANK: "rank"
+};
+
+/**
+ * Reward types
+ */
+exports.RewardTypeEnum = {
+  CHAMPION_QUALIFICATION_POINTS: "champions_qualification_points",
+  CHAMPION_STAGE_ENTRY: "champs2_stage_entry",
+  COIN: "coin",
+  ITEM: "item",
+  MYSTADIUM_SLOT: "myStadium_slot",
+  MYSTADIUM_TIER: "myStadium_tier",
+  PACK: "pack",
+  XP: "xp"
+};
+
+/**
+ * Item view sizes
+ */
+exports.ItemViewSizeEnum = {
+  SMALL: 0,
+  LARGE: 1
+};
+
+/**
+ * Device types
+ */
+exports.DeviceEnum = {
+  PHONE: 0,
+  LANDSCAPE: 1
+};
+
+/**
+ * Purchase pack types
+ */
+exports.PurchasePackTypeEnum = {
+  ALL: "ALL",
+  CARDPACK: "CARDPACK",
+  POINTSPACK: "POINTSPACK",
+  DRAFTENTRY: "DRAFTENTRY",
+  VANITYBUNDLE: "VANITYBUNDLE"
+};
+
+/**
+ * Squad item types
+ */
+exports.SquadItemTypeEnum = {
+  BADGES: "badges",
+  BALLS: "balls",
+  KITS: "kits",
+  PLAYERS: "players",
+  STADIA: "stadia",
+  STAFF: "staff",
+  TROPHIES: "trophies",
+  VANITY: "vanity"
+};
+
+/**
+ * Academy slot states
+ */
+exports.AcademySlotStateEnum = {
+  ACTIVE: "ACTIVE",
+  COMPLETE: "COMPLETE",
+  DISABLED: "DISABLED",
+  DISABLED_WITH_PROGRESS: "DISABLED_WITH_PROGRESS",
+  EXPIRED: "EXPIRED",
+  INACTIVE: "INACTIVE",
+  LOCKED: "LOCKED",
+  NOT_STARTED: "NOT_STARTED",
+  READY_FOR_REDEEM: "READY_FOR_REDEEM",
+  STARTED: "STARTED",
+  STRIPPED: "STRIPPED",
+  UNKNOWN: "UNKNOWN"
+};
+
+/**
+ * Academy trait types
+ */
+exports.AcademyTraitEnum = {
+  BASE: 1,
+  ICON: 2
+};
+
+/**
+ * Academy eligibility types
+ */
+exports.AcademyEligibilityTypeEnum = {
+  ACADEMY_PLAYER_SLOTTING: "ACADEMY_PLAYER_SLOTTING",
+  PLAYER_ATTRIBUTE: "PLAYER_ATTRIBUTE",
+  SCOPE: "SCOPE"
+};
+
+/**
+ * Academy eligibility attributes
+ */
+exports.AcademyEligibilityAttributeEnum = {
+  ACCELERATION: 8,
+  AGGRESSION: 16,
+  AGILITY: 10,
+  ATTACK_WORK_RATE: 39,
+  BALANCE: 11,
+  BALL_CONTROL: 21,
+  BASE_TRAITS_COUNT: 50,
+  BASE_TRAIT_PRESENT: 53,
+  CLUB: 43,
+  COMPOSURE: 17,
+  CROSSING: 22,
+  CURVE: 35,
+  DEFENSE: 6,
+  DEFENSIVE_WORK_RATE: 40,
+  DEFINITION_ID: 41,
+  DEF_AWARENESS: 29,
+  DRIBBLING_MAIN: 5,
+  DRIBBLING_SUB: 23,
+  FINISHING: 24,
+  FK_ACC: 25,
+  HEADING_ACC: 26,
+  ICON_TRAITS_COUNT: 51,
+  ICON_TRAIT_PRESENT: 54,
+  INTERCEPTIONS: 18,
+  JUMPING: 12,
+  LEAGUE: 44,
+  LONG_PASSING: 27,
+  LONG_SHOTS: 31,
+  NATION: 42,
+  NONE: 0,
+  OVR: 1,
+  PACE: 2,
+  PASSING: 4,
+  PENALTIES: 36,
+  PHYSICALITY: 7,
+  POSITION: 47,
+  POSITIONING: 19,
+  POSITION_NEGATED: 48,
+  POSSIBLE_POSITIONS_COUNT: 49,
+  RARITY: 45,
+  RARITY_NEGATED: 46,
+  REACTIONS: 15,
+  SHOOTING: 3,
+  SHORT_PASSING: 28,
+  SHOT_POWER: 30,
+  SKILL_MOVES: 38,
+  SLIDING_TACKLE: 33,
+  SPRINT_SPEED: 9,
+  STAMINA: 13,
+  STANDING_TACKLE: 32,
+  STRENGTH: 14,
+  TOTAL_TRAITS_COUNT: 52,
+  UNTRADEABLE: 55,
+  VISION: 20,
+  VOLLEYS: 34,
+  WEAK_FOOT: 37
+};
+
+/**
+ * Academy stat types (extended version with positions and traits)
+ */
+exports.AcademyStatTypeEnum = {
+  // Basic stats
+  ACCELERATION: 21,
+  ACTIVE_IN_ACADEMY: 1,
+  AGGRESSION: 29,
+  AGILITY: 23,
+  ATTACK_WORK_RATE: 83,
+  BALANCE: 24,
+  BALL_CONTROL: 34,
+
+  // Ball control traits
+  BALL_CONTROL_FLAIR: 119,
+  BALL_CONTROL_POSSESSION_HOLDER: 122,
+  BALL_CONTROL_SPEED_DRIBBLER: 118,
+  BALL_CONTROL_TECHNICAL_DRIBBLER: 117,
+  BALL_CONTROL_TRAP_MASTER: 120,
+  BALL_CONTROL_TRICKSTER: 121,
+
+  // Positions
+  CAM: 68,
+  CB: 61,
+  CDM: 66,
+  CF: 74,
+  CM: 67,
+
+  // More stats
+  COMPOSURE: 30,
+  CROSSING: 35,
+  CURVE: 48,
+
+  // Defending traits
+  DEFENDING_BRICK_WALL: 112,
+  DEFENDING_BRUISER: 116,
+  DEFENDING_FAST_JOCKEY: 111,
+  DEFENDING_INTERCEPTOR: 113,
+  DEFENDING_SLIDE_TACKLER: 115,
+  DEFENDING_TACKLE_VISION: 114,
+
+  DEFENSE: 16,
+  DEFENSIVE_WORK_RATE: 84,
+  DEF_AWARENESS: 42,
+  DRIBBLING_MAIN: 15,
+  DRIBBLING_SUB: 36,
+  ENROLLED_IN_ACADEMY: 0,
+  FINISHING: 37,
+
+  // Finishing traits
+  FINISHING_CHIP_SHOT: 102,
+  FINISHING_FINESSE_SHOT: 101,
+  FINISHING_FK_SPECIALIST: 104,
+  FINISHING_POWER_HEADER: 105,
+  FINISHING_POWER_SHOT: 103,
+
+  FK_ACC: 38,
+
+  // Goalkeeper traits
+  GOAL_KEEPER_COMES_FOR_CROSSES: 131,
+  GOAL_KEEPER_FAR_REACH: 133,
+  GOAL_KEEPER_LONG_THROWER: 129,
+  GOAL_KEEPER_QUICK_REFLEXES: 134,
+  GOAL_KEEPER_RUSHES_OUT_OF_GOAL: 132,
+  GOAL_KEEPER_SAVE_WITH_FOOT: 130,
+
+  HEADING_ACC: 39,
+  INTERCEPTIONS: 31,
+  JUMPING: 25,
+
+  // More positions
+  LB: 64,
+  LM: 69,
+  LONG_PASSING: 40,
+  LONG_SHOTS: 44,
+  LW: 71,
+  LWB: 65,
+
+  NICKNAME: 3,
+  OVR: 11,
+  PACE: 12,
+  PASSING: 14,
+
+  // Passing traits
+  PASSING_BULLET_PASSES: 107,
+  PASSING_LOB_PASS_MASTER: 108,
+  PASSING_PASS_INTO_SPACE: 106,
+  PASSING_TIKI_TAKA_MASTER: 109,
+  PASSING_WHIPPED_CROSSES: 110,
+
+  PENALTIES: 49,
+  PHYSICALITY: 17,
+
+  // Physical traits
+  PHYSICAL_ACROBATIC: 126,
+  PHYSICAL_AERIAL_MASTER: 128,
+  PHYSICAL_EXPLOSIVE_SPRINT_BOOST: 123,
+  PHYSICAL_OUTSIDE_FOOT: 125,
+  PHYSICAL_RELENTLESS: 124,
+  PHYSICAL_THROW_IN_SPECIALIST: 127,
+
+  POSITIONING: 32,
+  RARITY: 2,
+
+  // More positions
+  RB: 62,
+  REACTIONS: 28,
+  RM: 70,
+  RW: 72,
+  RWB: 63,
+
+  SHOOTING: 13,
+  SHORT_PASSING: 41,
+  SHOT_POWER: 43,
+  SKILL_MOVES: 82,
+  SLIDING_TACKLE: 46,
+  SPRINT_SPEED: 22,
+  ST: 73,
+  STAMINA: 26,
+  STANDING_TACKLE: 45,
+  STRENGTH: 27,
+  VISION: 33,
+  VOLLEYS: 47,
+  WEAK_FOOT: 81
+};
+
+/**
+ * Item rating tiers
+ */
+exports.ItemRatingTierEnum = {
+  NONE: 0,
+  BRONZE: 1,
+  SILVER: 2,
+  GOLD: 3
+};
+
+/**
+ * Player traits enumeration
+ */
+exports.PlayerTraitEnum = {
+  ACROBATIC: 25,
+  AERIAL_MASTER: 27,
+  BRICK_WALL: 11,
+  BRUISER: 15,
+  BULLET_PASSES: 6,
+  CHIP_SHOT: 1,
+  COMES_FOR_CROSSES: 30,
+  EXPLOSIVE_SPRINT_BOOST: 22,
+  FAR_REACH: 32,
+  FAST_JOCKEY: 10,
+  FINESSE_SHOT: 0,
+  FK_SPECIALIST: 3,
+  FLAIR: 18,
+  INTERCEPTER: 12,
+  LOB_PASS_MASTER: 7,
+  LONG_THROWER: 28,
+  OUTSIDE_FOOT: 24,
+  PASS_INTO_SPACE: 5,
+  POSSESSION_HOLDER: 21,
+  POWER_HEADER: 4,
+  POWER_SHOT: 2,
+  QUICK_REFLEXES: 33,
+  RELENTLESS: 23,
+  RUSHES_OUT_OF_GOAL: 31,
+  SAVE_WITH_FOOT: 29,
+  SLIDE_TACKLER: 14,
+  SPEED_DRIBBLER: 17,
+  TACKLE_VISION: 13,
+  TECHNICAL_DRIBBLER: 16,
+  THROW_IN_SPECIALIST: 26,
+  TIKI_TAKA_MASTER: 8,
+  TRAP_MASTER: 19,
+  TRICKSTER: 20,
+  WHIPPED_CROSSES: 9
+};
+
+/**
+ * SBC eligibility key enumeration
+ */
+exports.SBCEligibilityKeyEnum = {
+  ALL_PLAYERS_CHEMISTRY_POINTS: 36,
+  CHEMISTRY_POINTS: 35,
+  CLUB_COUNT: 9,
+  CLUB_ID: 12,
+  FIRST_OWNER_PLAYERS_COUNT: 30,
+  LEAGUE_COUNT: 8,
+  LEAGUE_ID: 11,
+  LEGEND_COUNT: 15,
+  NATION_COUNT: 7,
+  NATION_ID: 10,
+  NUM_TROPHY_REQUIRED: 16,
+  PLAYER_COUNT: 2,
+  PLAYER_COUNT_COMBINED: 21,
+  PLAYER_EXACT_OVR: 27,
+  PLAYER_LEVEL: 17,
+  PLAYER_MAX_OVR: 28,
+  PLAYER_MIN_OVR: 26,
+  PLAYER_QUALITY: 3,
+  PLAYER_RARITY: 18,
+  PLAYER_RARITY_GROUP: 25,
+  PLAYER_TRADABILITY: 33,
+  SAME_CLUB_COUNT: 6,
+  SAME_LEAGUE_COUNT: 5,
+  SAME_NATION_COUNT: 4,
+  SCOPE: 13,
+  TEAM_RATING: 19,
+  TEAM_STAR_RATING: 0
+};
+
+/**
+ * App notification types
+ */
+exports.AppNotificationEnum = {
+  ACADEMY_UPDATE: "notification.AcademyUpdate",
+  APP_PAUSE: "notification.AppPause",
+  APP_RESUME: "notification.AppResume",
+  AUCTION_CLOSE: "notification.AuctionClose",
+  ITEM_ACTIVATE: "notification.ItemActivate",
+  ITEM_APPLY: "notification.ItemApply",
+  ITEM_BID: "notification.ItemBid",
+  ITEM_CLEARSOLD: "notification.ItemClearSold",
+  ITEM_DISCARD: "notification.ItemDiscard",
+  ITEM_LIST: "notification.ItemList",
+  ITEM_MOVE: "notification.ItemMove",
+  ITEM_REDEEM: "notification.ItemRedeem",
+  ITEM_UNDO_DISCARD: "notification.ItemUndoDiscard",
+  ITEM_UNWATCH: "notification.ItemUnwatch",
+  ITEM_WATCH: "notification.ItemWatch",
+  MTX_CATALOG_REFRESH: "notification.MTXCatalogRefresh",
+  MTX_PURCHASE_NOTIF: "notification.MTXPurchase",
+  OBJECTIVE_AVAILABLE_REWARD_COUNT_CHANGE: "notification.ObjectiveAvailableRewardCountChange",
+  OBJECTIVE_CAMPAIGN_REWARDS_CLAIM: "notification.CampaignRewardsClaim",
+  OBJECTIVE_COMPLETE: "notification.ObjectiveComplete",
+  OBJECTIVE_GROUP_COMPLETE: "notification.ObjectiveGroupComplete",
+  OBJECTIVE_UPDATE: "notification.ObjectiveUpdate",
+  PLAYER_HEALTH_UPDATE: "notification.PlayerHealthUpdate",
+  SQUAD_CREATE: "notification.SquadCreate",
+  SQUAD_DELETE: "notification.SquadDelete",
+  SQUAD_SAVE: "notification.SquadSave",
+  STADIUM_SAVE_FAILED: "notification.StadiumSaveFailed",
+  STADIUM_SAVE_INTERVAL: "notification.StadiumSaveInterval",
+  STORE_PACK_COUNT_CHANGE: "notification.StorePackCountChange",
+  UI_ITEM_STATE_CHANGE: "notification.UIItemStateChange",
+  UI_NOTIFICATION: "notification.UINotification",
+  UNASSIGNED_ITEM_ADDED: "notification.UnassignedItemAdded",
+  USER_CURRENCY_UPDATE: "notification.UserCurrencyUpdate"
+};
+
+/**
+ * Search category groups
+ */
+exports.SearchCategoryGroupEnum = {
+  NONE: "none",
+  CLUB: "club",
+  STRUCTURE: "structure",
+  COSMETICS: "cosmetics"
+};
+
+/**
+ * UI Squad Pitch Event types
+ */
+exports.UISquadPitchEventEnum = {
+  DRAGDROP: "squadDragDrop",
+  DRAGDROPPABLE: "squadDragDroppable",
+  DRAGEND: "squadDragEnd",
+  DRAGMOVE: "squadDragMove",
+  DRAGSTART: "squadDragStart",
+  ITEM_SWAP: "squadItemSwap",
+  SLOT_SELECT: "squadSlotSelect"
+};

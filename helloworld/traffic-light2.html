@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>红绿灯</title>
+    <style>
+      .traffic-light {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: gray;
+        margin: 50px auto;
+        transition: background-color 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="traffic-light" id="light"></div>
+
+    <script>
+      async function runTrafficLight() {
+        const light = document.getElementById("light");
+
+        while (true) {
+          // 绿灯 - 3秒
+          light.style.backgroundColor = "green";
+          await sleep(3000);
+
+          // 黄灯 - 1秒
+          light.style.backgroundColor = "yellow";
+          await sleep(1000);
+
+          // 红灯 - 2秒
+          light.style.backgroundColor = "red";
+          await sleep(2000);
+        }
+      }
+
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+
+      // 启动红绿灯
+      runTrafficLight();
+    </script>
+  </body>
+</html>

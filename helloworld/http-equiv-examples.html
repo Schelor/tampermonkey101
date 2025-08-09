@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    
+    <!-- 1. 页面刷新和重定向 -->
+    <!-- <meta http-equiv="refresh" content="5;url=https://www.example.com"> -->
+    
+    <!-- 2. 设置页面编码 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <!-- 3. 设置页面缓存控制 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <!-- 4. 设置X-UA-Compatible (IE兼容性) -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- 5. 设置页面安全策略 -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+    
+    <!-- 6. 设置页面语言 -->
+    <meta http-equiv="Content-Language" content="zh-CN">
+    
+    <!-- 7. 设置页面作者 -->
+    <meta http-equiv="Author" content="Your Name">
+    
+    <!-- 8. 设置页面描述 -->
+    <meta http-equiv="Description" content="这是一个http-equiv用法示例页面">
+    
+    <!-- 9. 设置页面关键词 -->
+    <meta http-equiv="Keywords" content="HTML, http-equiv, meta标签">
+    
+    <!-- 10. 设置页面生成器 -->
+    <meta http-equiv="Generator" content="Visual Studio Code">
+    
+    <title>http-equiv 用法示例</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .example {
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #007acc;
+            border-radius: 4px;
+        }
+        .code {
+            background-color: #f8f8f8;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>http-equiv 属性用法详解</h1>
+    
+    <p><code>http-equiv</code> 是 HTML &lt;meta&gt; 标签的一个属性，用于模拟 HTTP 响应头。它告诉浏览器如何处理页面。</p>
+    
+    <h2>1. 页面刷新和重定向</h2>
+    <div class="example">
+        <p><strong>用途：</strong>自动刷新页面或重定向到其他页面</p>
+        <div class="code">
+&lt;meta http-equiv="refresh" content="5;url=https://www.example.com"&gt;
+        </div>
+        <p><strong>说明：</strong>5秒后自动跳转到指定URL。如果只写数字，则只刷新当前页面。</p>
+    </div>
+    
+    <h2>2. 设置页面编码</h2>
+    <div class="example">
+        <p><strong>用途：</strong>指定页面的字符编码</p>
+        <div class="code">
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+        </div>
+        <p><strong>说明：</strong>等同于 &lt;meta charset="UTF-8"&gt;，但更明确地指定了内容类型。</p>
+    </div>
+    
+    <h2>3. 缓存控制</h2>
+    <div class="example">
+        <p><strong>用途：</strong>控制浏览器缓存行为</p>
+        <div class="code">
+&lt;meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"&gt;
+&lt;meta http-equiv="Pragma" content="no-cache"&gt;
+&lt;meta http-equiv="Expires" content="0"&gt;
+        </div>
+        <p><strong>说明：</strong>禁止缓存页面，每次访问都从服务器获取最新内容。</p>
+    </div>
+    
+    <h2>4. IE兼容性设置</h2>
+    <div class="example">
+        <p><strong>用途：</strong>控制IE浏览器的渲染模式</p>
+        <div class="code">
+&lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+        </div>
+        <p><strong>说明：</strong>强制IE使用最新的渲染引擎，避免兼容性问题。</p>
+    </div>
+    
+    <h2>5. 内容安全策略 (CSP)</h2>
+    <div class="example">
+        <p><strong>用途：</strong>防止XSS攻击，控制资源加载</p>
+        <div class="code">
+&lt;meta http-equiv="Content-Security-Policy" content="default-src 'self'"&gt;
+        </div>
+        <p><strong>说明：</strong>只允许从同源加载资源，提高安全性。</p>
+    </div>
+    
+    <h2>6. 页面语言设置</h2>
+    <div class="example">
+        <p><strong>用途：</strong>指定页面的主要语言</p>
+        <div class="code">
+&lt;meta http-equiv="Content-Language" content="zh-CN"&gt;
+        </div>
+        <p><strong>说明：</strong>告诉浏览器页面使用中文（简体）。</p>
+    </div>
+    
+    <h2>7. 页面作者信息</h2>
+    <div class="example">
+        <p><strong>用途：</strong>指定页面作者</p>
+        <div class="code">
+&lt;meta http-equiv="Author" content="Your Name"&gt;
+        </div>
+        <p><strong>说明：</strong>提供页面作者信息，对SEO有帮助。</p>
+    </div>
+    
+    <h2>8. 页面描述</h2>
+    <div class="example">
+        <p><strong>用途：</strong>提供页面描述信息</p>
+        <div class="code">
+&lt;meta http-equiv="Description" content="这是一个http-equiv用法示例页面"&gt;
+        </div>
+        <p><strong>说明：</strong>搜索引擎会使用这个描述来显示页面摘要。</p>
+    </div>
+    
+    <h2>9. 页面关键词</h2>
+    <div class="example">
+        <p><strong>用途：</strong>指定页面关键词</p>
+        <div class="code">
+&lt;meta http-equiv="Keywords" content="HTML, http-equiv, meta标签"&gt;
+        </div>
+        <p><strong>说明：</strong>虽然现代搜索引擎不太依赖这个，但仍有一定作用。</p>
+    </div>
+    
+    <h2>10. 页面生成器</h2>
+    <div class="example">
+        <p><strong>用途：</strong>指定生成页面的工具</p>
+        <div class="code">
+&lt;meta http-equiv="Generator" content="Visual Studio Code"&gt;
+        </div>
+        <p><strong>说明：</strong>标识创建页面的软件或工具。</p>
+    </div>
+    
+    <div class="warning">
+        <h3>注意事项：</h3>
+        <ul>
+            <li>某些 <code>http-equiv</code> 值已被现代标准替代，如 <code>charset</code> 属性</li>
+            <li>缓存控制最好在服务器端设置，客户端meta标签优先级较低</li>
+            <li>内容安全策略(CSP)建议使用HTTP头而不是meta标签</li>
+            <li>某些值主要用于SEO，对页面功能影响不大</li>
+        </ul>
+    </div>
+    
+    <h2>实际应用示例</h2>
+    <div class="example">
+        <p>以下是一个实际项目中常用的meta标签组合：</p>
+        <div class="code">
+&lt;!-- 基本设置 --&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+&lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+
+&lt;!-- SEO相关 --&gt;
+&lt;meta name="description" content="页面描述"&gt;
+&lt;meta name="keywords" content="关键词1,关键词2"&gt;
+&lt;meta name="author" content="作者名"&gt;
+
+&lt;!-- 安全设置 --&gt;
+&lt;meta http-equiv="Content-Security-Policy" content="default-src 'self'"&gt;
+
+&lt;!-- 缓存控制（开发环境） --&gt;
+&lt;meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"&gt;
+        </div>
+    </div>
+    
+    <script>
+        // 演示页面加载完成
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('页面加载完成，http-equiv示例页面已准备就绪');
+        });
+    </script>
+</body>
+</html> 

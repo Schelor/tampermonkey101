@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>折衷鹦鹉颜色变换演示</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .canvas-wrapper {
+            text-align: center;
+        }
+        
+        canvas {
+            border: 3px solid #ddd;
+            border-radius: 10px;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #ff6b6b;
+        }
+        
+        .labels {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .demo-image {
+            width: 200px;
+            height: 150px;
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            border-radius: 10px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .demo-image::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 40px;
+            background: #FF9800;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        }
+        
+        .demo-image::after {
+            content: '';
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 60px;
+            background: #4CAF50;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        }
+        
+        .demo-image.red {
+            background: linear-gradient(45deg, #f44336, #e91e63);
+        }
+        
+        .demo-image.red::after {
+            background: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🦜 折衷鹦鹉颜色变换演示</h1>
+        
+        <div class="info">
+            <p><strong>关于折衷鹦鹉：</strong></p>
+            <p>折衷鹦鹉是一种非常特别的鸟类，雄性和雌性有着完全不同的颜色：</p>
+            <ul>
+                <li>🟢 <strong>雄性：</strong> 绿色羽毛，橙黄色喙</li>
+                <li>🔴 <strong>雌性：</strong> 红色羽毛，黑色喙</li>
+            </ul>
+            <p>点击下面的按钮，看看如何把雄性折衷鹦鹉变成可爱的红色雌性！</p>
+        </div>
+        
+        <div class="controls">
+            <button onclick="showMale()">🟢 显示雄性（绿色）</button>
+            <button onclick="showFemale()">🔴 显示雌性（红色）</button>
+            <button onclick="animateTransform()">✨ 动画变换</button>
+        </div>
+        
+        <div class="canvas-container">
+            <div class="canvas-wrapper">
+                <div class="labels">雄性折衷鹦鹉</div>
+                <div class="demo-image" id="maleParrot">
+                    🦜<br>雄性
+                </div>
+            </div>
+            <div class="canvas-wrapper">
+                <div class="labels">雌性折衷鹦鹉</div>
+                <div class="demo-image" id="femaleParrot">
+                    🦜<br>雌性
+                </div>
+            </div>
+        </div>
+        
+        <div class="info">
+            <p><strong>技术说明：</strong></p>
+            <p>在实际的图像处理中，我们使用以下技术：</p>
+            <ul>
+                <li><strong>颜色空间转换：</strong> 将RGB转换为HSV颜色空间进行精确的颜色检测</li>
+                <li><strong>绿色检测：</strong> 检测HSV色相在90-150度范围内的绿色区域</li>
+                <li><strong>颜色映射：</strong> 将绿色色相(120°)映射到红色色相(0°或360°)</li>
+                <li><strong>饱和度调整：</strong> 提升红色羽毛的饱和度使其更加鲜艳</li>
+                <li><strong>Canvas API：</strong> 使用HTML5 Canvas进行像素级图像处理</li>
+            </ul>
+        </div>
+        
+        <div class="controls">
+            <button onclick="openAdvancedDemo()">🚀 打开高级演示</button>
+            <button onclick="openBasicDemo()">📱 打开基础演示</button>
+        </div>
+    </div>
+
+    <script>
+        const maleParrot = document.getElementById('maleParrot');
+        const femaleParrot = document.getElementById('femaleParrot');
+        
+        function showMale() {
+            maleParrot.classList.remove('red');
+            femaleParrot.classList.remove('red');
+        }
+        
+        function showFemale() {
+            maleParrot.classList.add('red');
+            femaleParrot.classList.add('red');
+        }
+        
+        function animateTransform() {
+            // 重置状态
+            showMale();
+            
+            // 延迟后开始动画
+            setTimeout(() => {
+                maleParrot.style.transition = 'all 1s ease-in-out';
+                femaleParrot.style.transition = 'all 1s ease-in-out';
+                
+                setTimeout(() => {
+                    showFemale();
+                }, 500);
+                
+                // 动画完成后重置过渡效果
+                setTimeout(() => {
+                    maleParrot.style.transition = '';
+                    femaleParrot.style.transition = '';
+                }, 1500);
+            }, 300);
+        }
+        
+        function openAdvancedDemo() {
+            window.open('./parrot-advanced-color-changer.html', '_blank');
+        }
+        
+        function openBasicDemo() {
+            window.open('./parrot-color-changer.html', '_blank');
+        }
+        
+        // 添加一些交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为按钮添加点击效果
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+            
+            // 为演示图片添加悬停效果
+            const demoImages = document.querySelectorAll('.demo-image');
+            demoImages.forEach(img => {
+                img.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                    this.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)';
+                });
+                
+                img.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = '';
+                });
+            });
+        });
+        
+        // 添加键盘快捷键
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case '1':
+                    showMale();
+                    break;
+                case '2':
+                    showFemale();
+                    break;
+                case '3':
+                    animateTransform();
+                    break;
+            }
+        });
+    </script>
+</body>
+</html> 

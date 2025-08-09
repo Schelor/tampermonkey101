@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN" >
+<head>
+    <meta charset="UTF-8">
+    
+    <!-- 响应式视口设置 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- IE兼容性设置 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- 页面描述 -->
+    <meta name="description" content="交通灯演示页面">
+    
+    <!-- 缓存控制（开发环境禁用缓存） -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <title>交通灯演示</title>
+    <style>
+        .traffic-light {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: gray;
+            margin: 50px auto;
+            transition: background-color 0.5s;
+        }
+        
+        .traverse-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .traverse-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .output {
+            margin: 20px auto;
+            max-width: 600px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="traffic-light" id="light"></div>
+    
+    <button class="traverse-btn" onclick="traverseDOM()">遍历DOM树并打印所有tagName</button>
+    
+    <div class="output" id="output"></div>
+
+    <script>
+        // 遍历DOM树的递归函数
+        function traverseDOMRecursive(element = document.documentElement, level = 0) {
+            let result = '';
+            const indent = '  '.repeat(level);
+            
+            // 打印当前元素的tagName
+            result += `${indent}${element.tagName}\n`;
+            
+            // 遍历所有子节点
+            for (let i = 0; i < element.children.length; i++) {
+                result += traverseDOMRecursive(element.children[i], level + 1);
+            }
+            
+            return result;
+        }
+        
+        // 触发遍历的函数
+        function traverseDOM() {
+            const output = document.getElementById('output');
+            const result = traverseDOMRecursive();
+            output.textContent = `DOM树遍历结果:\n${result}`;
+            console.log('DOM树遍历结果:', result);
+        }
+
+        // 原有的代码
+        for(var i = 0; i < 20; i ++) {
+            void function(i){
+                var div = document.createElement("div");
+                div.innerHTML = i;
+                div.onclick = function(){
+                    console.log(i);
+                }
+                document.body.appendChild(div);
+            }(i);
+        }
+    </script>
+</body>
+</html>

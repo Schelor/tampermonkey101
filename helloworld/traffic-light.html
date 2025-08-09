@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>红绿灯</title>
+    <style>
+        .traffic-light {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: gray;
+            margin: 50px auto;
+            transition: background-color 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="traffic-light" id="light"></div>
+
+    <script>
+        const light = document.getElementById('light');
+        
+        // 定义灯的状态
+        const states = [
+            { color: 'green', duration: 3000 },
+            { color: 'yellow', duration: 1000 },
+            { color: 'red', duration: 2000 }
+        ];
+        
+        let currentStateIndex = 0;
+        
+        // 改变灯的颜色
+        function changeLight() {
+            const state = states[currentStateIndex];
+            light.style.backgroundColor = state.color;
+            
+            // 计算下一个状态的索引
+            currentStateIndex = (currentStateIndex + 1) % states.length;
+            
+            // 设置定时器，在当前状态持续时间后切换到下一个状态
+            setTimeout(changeLight, state.duration);
+        }
+        
+        // 开始红绿灯循环
+        changeLight();
+    </script>
+</body>
+</html>

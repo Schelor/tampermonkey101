@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高级折衷鹦鹉颜色变换器</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 1000px;
+            width: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .canvas-wrapper {
+            text-align: center;
+        }
+        
+        canvas {
+            border: 3px solid #ddd;
+            border-radius: 10px;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #ff6b6b;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .labels {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .slider-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .slider {
+            width: 200px;
+            margin: 0 10px;
+        }
+        
+        .slider-label {
+            display: inline-block;
+            width: 120px;
+            text-align: right;
+            margin-right: 10px;
+        }
+        
+        .slider-value {
+            display: inline-block;
+            width: 30px;
+            text-align: left;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🦜 高级折衷鹦鹉颜色变换器</h1>
+        
+        <div class="info">
+            <p><strong>关于折衷鹦鹉：</strong></p>
+            <p>折衷鹦鹉是一种非常特别的鸟类，雄性和雌性有着完全不同的颜色：</p>
+            <ul>
+                <li>🟢 <strong>雄性：</strong> 绿色羽毛，橙黄色喙</li>
+                <li>🔴 <strong>雌性：</strong> 红色羽毛，黑色喙</li>
+            </ul>
+            <p>使用HSV颜色空间进行精确的颜色变换，让雄性鹦鹉变成可爱的红色雌性！</p>
+        </div>
+        
+        <div class="slider-container">
+            <div>
+                <span class="slider-label">绿色检测阈值:</span>
+                <input type="range" id="greenThreshold" class="slider" min="0" max="255" value="100">
+                <span class="slider-value" id="greenThresholdValue">100</span>
+            </div>
+            <div>
+                <span class="slider-label">红色强度:</span>
+                <input type="range" id="redIntensity" class="slider" min="0.5" max="2.0" step="0.1" value="1.5">
+                <span class="slider-value" id="redIntensityValue">1.5</span>
+            </div>
+            <div>
+                <span class="slider-label">饱和度提升:</span>
+                <input type="range" id="saturationBoost" class="slider" min="1.0" max="2.0" step="0.1" value="1.3">
+                <span class="slider-value" id="saturationBoostValue">1.3</span>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="loadOriginal()">🟢 显示雄性（原始）</button>
+            <button onclick="transformToFemale()">🔴 变成雌性（红色）</button>
+            <button onclick="resetCanvas()">🔄 重置</button>
+        </div>
+        
+        <div class="canvas-container">
+            <div class="canvas-wrapper">
+                <div class="labels">原始图片</div>
+                <canvas id="originalCanvas" width="400" height="300"></canvas>
+            </div>
+            <div class="canvas-wrapper">
+                <div class="labels">变换后</div>
+                <canvas id="transformedCanvas" width="400" height="300"></canvas>
+            </div>
+        </div>
+        
+        <div class="loading" id="loading">正在加载图片...</div>
+    </div>
+
+    <script>
+        const originalCanvas = document.getElementById('originalCanvas');
+        const transformedCanvas = document.getElementById('transformedCanvas');
+        const originalCtx = originalCanvas.getContext('2d');
+        const transformedCtx = transformedCanvas.getContext('2d');
+        
+        let originalImage = null;
+        let isImageLoaded = false;
+        
+        // 更新滑块值显示
+        function updateSliderValues() {
+            document.getElementById('greenThresholdValue').textContent = 
+                document.getElementById('greenThreshold').value;
+            document.getElementById('redIntensityValue').textContent = 
+                document.getElementById('redIntensity').value;
+            document.getElementById('saturationBoostValue').textContent = 
+                document.getElementById('saturationBoost').value;
+        }
+        
+        // RGB转HSV
+        function rgbToHsv(r, g, b) {
+            r /= 255;
+            g /= 255;
+            b /= 255;
+            
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            const diff = max - min;
+            
+            let h = 0;
+            let s = max === 0 ? 0 : diff / max;
+            let v = max;
+            
+            if (diff !== 0) {
+                switch (max) {
+                    case r:
+                        h = ((g - b) / diff) % 6;
+                        break;
+                    case g:
+                        h = (b - r) / diff + 2;
+                        break;
+                    case b:
+                        h = (r - g) / diff + 4;
+                        break;
+                }
+                h *= 60;
+                if (h < 0) h += 360;
+            }
+            
+            return { h, s, v };
+        }
+        
+        // HSV转RGB
+        function hsvToRgb(h, s, v) {
+            const c = v * s;
+            const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+            const m = v - c;
+            
+            let r, g, b;
+            
+            if (h >= 0 && h < 60) {
+                r = c; g = x; b = 0;
+            } else if (h >= 60 && h < 120) {
+                r = x; g = c; b = 0;
+            } else if (h >= 120 && h < 180) {
+                r = 0; g = c; b = x;
+            } else if (h >= 180 && h < 240) {
+                r = 0; g = x; b = c;
+            } else if (h >= 240 && h < 300) {
+                r = x; g = 0; b = c;
+            } else {
+                r = c; g = 0; b = x;
+            }
+            
+            return {
+                r: Math.round((r + m) * 255),
+                g: Math.round((g + m) * 255),
+                b: Math.round((b + m) * 255)
+            };
+        }
+        
+        // 加载图片
+        function loadImage() {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            
+            img.onload = function() {
+                originalImage = img;
+                isImageLoaded = true;
+                document.getElementById('loading').style.display = 'none';
+                
+                // 调整canvas大小以适应图片
+                const aspectRatio = img.width / img.height;
+                const maxWidth = 400;
+                const maxHeight = 300;
+                
+                let canvasWidth = maxWidth;
+                let canvasHeight = maxWidth / aspectRatio;
+                
+                if (canvasHeight > maxHeight) {
+                    canvasHeight = maxHeight;
+                    canvasWidth = maxHeight * aspectRatio;
+                }
+                
+                originalCanvas.width = canvasWidth;
+                originalCanvas.height = canvasHeight;
+                transformedCanvas.width = canvasWidth;
+                transformedCanvas.height = canvasHeight;
+                
+                // 绘制原始图片
+                loadOriginal();
+            };
+            
+            img.onerror = function() {
+                document.getElementById('loading').innerHTML = '❌ 图片加载失败，请检查图片路径';
+                console.error('图片加载失败，尝试的路径:', img.src);
+            };
+            
+            // 尝试多种图片格式
+            const imageFormats = ['./parrot.webp', './parrot.png', './parrot.jpg', './parrot.jpeg'];
+            let currentFormatIndex = 0;
+            
+            function tryNextFormat() {
+                if (currentFormatIndex < imageFormats.length) {
+                    img.src = imageFormats[currentFormatIndex];
+                    currentFormatIndex++;
+                } else {
+                    document.getElementById('loading').innerHTML = '❌ 无法加载图片，请确保图片文件存在';
+                }
+            }
+            
+            // 开始尝试加载
+            tryNextFormat();
+        }
+        
+        // 显示原始图片
+        function loadOriginal() {
+            if (!isImageLoaded) return;
+            
+            originalCtx.clearRect(0, 0, originalCanvas.width, originalCanvas.height);
+            originalCtx.drawImage(originalImage, 0, 0, originalCanvas.width, originalCanvas.height);
+            
+            // 清空变换后的canvas
+            transformedCtx.clearRect(0, 0, transformedCanvas.width, transformedCanvas.height);
+        }
+        
+        // 将绿色转换为红色（使用HSV颜色空间）
+        function transformToFemale() {
+            if (!isImageLoaded) return;
+            
+            // 先绘制原始图片
+            transformedCtx.drawImage(originalImage, 0, 0, transformedCanvas.width, transformedCanvas.height);
+            
+            // 获取图像数据
+            const imageData = transformedCtx.getImageData(0, 0, transformedCanvas.width, transformedCanvas.height);
+            const data = imageData.data;
+            
+            // 获取滑块参数
+            const greenThreshold = parseInt(document.getElementById('greenThreshold').value);
+            const redIntensity = parseFloat(document.getElementById('redIntensity').value);
+            const saturationBoost = parseFloat(document.getElementById('saturationBoost').value);
+            
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+                
+                // 转换为HSV
+                const hsv = rgbToHsv(r, g, b);
+                
+                // 检测绿色区域（雄性鹦鹉的羽毛）
+                // 绿色在HSV中的色相范围大约是90-150度
+                const isGreen = hsv.h >= 90 && hsv.h <= 150 && hsv.s > 0.3 && hsv.v > 0.3;
+                
+                if (isGreen) {
+                    // 将绿色转换为红色
+                    // 红色在HSV中的色相大约是0度或360度
+                    hsv.h = 0; // 设置为红色
+                    hsv.s = Math.min(1.0, hsv.s * saturationBoost); // 提升饱和度
+                    hsv.v = Math.min(1.0, hsv.v * 1.1); // 稍微提升亮度
+                    
+                    // 转换回RGB
+                    const newRgb = hsvToRgb(hsv.h, hsv.s, hsv.v);
+                    
+                    data[i] = Math.min(255, newRgb.r * redIntensity);     // 红色通道
+                    data[i + 1] = newRgb.g; // 绿色通道
+                    data[i + 2] = newRgb.b;  // 蓝色通道
+                } else {
+                    // 对于非绿色区域，进行微调
+                    if (hsv.h >= 20 && hsv.h <= 60 && hsv.s > 0.4) {
+                        // 橙色/黄色区域（喙）调整为更深的橙色
+                        hsv.h = 30; // 深橙色
+                        hsv.s = Math.min(1.0, hsv.s * 1.2);
+                        hsv.v = Math.min(1.0, hsv.v * 0.9);
+                        
+                        const newRgb = hsvToRgb(hsv.h, hsv.s, hsv.v);
+                        data[i] = newRgb.r;
+                        data[i + 1] = newRgb.g;
+                        data[i + 2] = newRgb.b;
+                    } else {
+                        // 其他区域保持原样，但稍微调整饱和度
+                        hsv.s = Math.min(1.0, hsv.s * saturationBoost);
+                        const newRgb = hsvToRgb(hsv.h, hsv.s, hsv.v);
+                        data[i] = newRgb.r;
+                        data[i + 1] = newRgb.g;
+                        data[i + 2] = newRgb.b;
+                    }
+                }
+            }
+            
+            // 将处理后的图像数据放回canvas
+            transformedCtx.putImageData(imageData, 0, 0);
+        }
+        
+        // 重置canvas
+        function resetCanvas() {
+            if (!isImageLoaded) return;
+            loadOriginal();
+        }
+        
+        // 页面加载完成后开始加载图片
+        window.onload = function() {
+            loadImage();
+            
+            // 添加滑块事件监听器
+            const sliders = document.querySelectorAll('.slider');
+            sliders.forEach(slider => {
+                slider.addEventListener('input', updateSliderValues);
+            });
+            
+            updateSliderValues();
+        };
+        
+        // 添加一些交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为按钮添加点击效果
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

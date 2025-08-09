@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>折衷鹦鹉颜色变换器</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .canvas-wrapper {
+            text-align: center;
+        }
+        
+        canvas {
+            border: 3px solid #ddd;
+            border-radius: 10px;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #ff6b6b;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .labels {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🦜 折衷鹦鹉颜色变换器</h1>
+        
+        <div class="info">
+            <p><strong>关于折衷鹦鹉：</strong></p>
+            <p>折衷鹦鹉是一种非常特别的鸟类，雄性和雌性有着完全不同的颜色：</p>
+            <ul>
+                <li>🟢 <strong>雄性：</strong> 绿色羽毛，橙黄色喙</li>
+                <li>🔴 <strong>雌性：</strong> 红色羽毛，黑色喙</li>
+            </ul>
+            <p>点击下面的按钮，看看如何把这只雄性折衷鹦鹉变成可爱的红色雌性！</p>
+        </div>
+        
+        <div class="controls">
+            <button onclick="loadOriginal()">🟢 显示雄性（原始）</button>
+            <button onclick="transformToFemale()">🔴 变成雌性（红色）</button>
+            <button onclick="resetCanvas()">🔄 重置</button>
+        </div>
+        
+        <div class="canvas-container">
+            <div class="canvas-wrapper">
+                <div class="labels">原始图片</div>
+                <canvas id="originalCanvas" width="400" height="300"></canvas>
+            </div>
+            <div class="canvas-wrapper">
+                <div class="labels">变换后</div>
+                <canvas id="transformedCanvas" width="400" height="300"></canvas>
+            </div>
+        </div>
+        
+        <div class="loading" id="loading">正在加载图片...</div>
+    </div>
+
+    <script>
+        const originalCanvas = document.getElementById('originalCanvas');
+        const transformedCanvas = document.getElementById('transformedCanvas');
+        const originalCtx = originalCanvas.getContext('2d');
+        const transformedCtx = transformedCanvas.getContext('2d');
+        
+        let originalImage = null;
+        let isImageLoaded = false;
+        
+        // 加载图片
+        function loadImage() {
+            const img = new Image();
+            // 移除 crossOrigin 设置，避免本地文件的跨域问题
+            
+            img.onload = function() {
+                originalImage = img;
+                isImageLoaded = true;
+                document.getElementById('loading').style.display = 'none';
+                
+                // 调整canvas大小以适应图片
+                const aspectRatio = img.width / img.height;
+                const maxWidth = 400;
+                const maxHeight = 300;
+                
+                let canvasWidth = maxWidth;
+                let canvasHeight = maxWidth / aspectRatio;
+                
+                if (canvasHeight > maxHeight) {
+                    canvasHeight = maxHeight;
+                    canvasWidth = maxHeight * aspectRatio;
+                }
+                
+                originalCanvas.width = canvasWidth;
+                originalCanvas.height = canvasHeight;
+                transformedCanvas.width = canvasWidth;
+                transformedCanvas.height = canvasHeight;
+                
+                // 绘制原始图片
+                loadOriginal();
+            };
+            
+            // 尝试多种图片格式
+            const imageFormats = ['parrot.webp', 'parrot.png', 'parrot.jpg', 'parrot.jpeg'];
+            let currentFormatIndex = 0;
+            
+            function tryNextFormat() {
+                if (currentFormatIndex < imageFormats.length) {
+                    const currentPath = imageFormats[currentFormatIndex];
+                    console.log('尝试加载图片:', currentPath);
+                    img.src = currentPath;
+                    currentFormatIndex++;
+                } else {
+                    document.getElementById('loading').innerHTML = '❌ 无法加载图片，请确保 parrot.webp 或 parrot.png 文件存在';
+                    console.error('所有图片格式都加载失败');
+                }
+            }
+            
+            img.onerror = function() {
+                console.error('图片加载失败，尝试的路径:', img.src);
+                // 尝试下一个格式
+                setTimeout(tryNextFormat, 100);
+            };
+            
+            // 开始尝试加载
+            tryNextFormat();
+        }
+        
+        // 显示原始图片
+        function loadOriginal() {
+            if (!isImageLoaded) return;
+            
+            originalCtx.clearRect(0, 0, originalCanvas.width, originalCanvas.height);
+            originalCtx.drawImage(originalImage, 0, 0, originalCanvas.width, originalCanvas.height);
+            
+            // 清空变换后的canvas
+            transformedCtx.clearRect(0, 0, transformedCanvas.width, transformedCanvas.height);
+        }
+        
+        // 将绿色转换为红色
+        function transformToFemale() {
+            if (!isImageLoaded) return;
+            
+            // 先绘制原始图片
+            transformedCtx.drawImage(originalImage, 0, 0, transformedCanvas.width, transformedCanvas.height);
+            
+            // 获取图像数据
+            const imageData = transformedCtx.getImageData(0, 0, transformedCanvas.width, transformedCanvas.height);
+            const data = imageData.data;
+            
+            // 颜色变换参数
+            const greenToRedRatio = 0.8; // 绿色到红色的转换比例
+            const saturationBoost = 1.3; // 饱和度提升
+            
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+                
+                // 检测绿色区域（雄性鹦鹉的羽毛）
+                const isGreen = g > r && g > b && g > 100;
+                
+                if (isGreen) {
+                    // 将绿色转换为红色
+                    const greenIntensity = g / 255;
+                    const newRed = Math.min(255, r + (g * greenToRedRatio));
+                    const newGreen = g * (1 - greenToRedRatio * 0.7);
+                    const newBlue = b * 0.8; // 稍微减少蓝色
+                    
+                    data[i] = newRed;     // 红色通道
+                    data[i + 1] = newGreen; // 绿色通道
+                    data[i + 2] = newBlue;  // 蓝色通道
+                } else {
+                    // 对于非绿色区域，稍微调整颜色以匹配雌性鹦鹉的色调
+                    if (r > 150 && g > 100 && b < 100) {
+                        // 橙色/黄色区域（喙）调整为更深的橙色
+                        data[i] = Math.min(255, r * 1.1);
+                        data[i + 1] = g * 0.9;
+                        data[i + 2] = b * 0.7;
+                    }
+                }
+            }
+            
+            // 应用饱和度调整
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+                
+                // 计算灰度值
+                const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+                
+                // 提升饱和度
+                data[i] = Math.min(255, gray + (r - gray) * saturationBoost);
+                data[i + 1] = Math.min(255, gray + (g - gray) * saturationBoost);
+                data[i + 2] = Math.min(255, gray + (b - gray) * saturationBoost);
+            }
+            
+            // 将处理后的图像数据放回canvas
+            transformedCtx.putImageData(imageData, 0, 0);
+        }
+        
+        // 重置canvas
+        function resetCanvas() {
+            if (!isImageLoaded) return;
+            loadOriginal();
+        }
+        
+        // 页面加载完成后开始加载图片
+        window.onload = function() {
+            loadImage();
+        };
+        
+        // 添加一些交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为按钮添加点击音效（可选）
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 可以在这里添加音效或其他交互效果
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
