@@ -19815,7 +19815,7 @@
           v = n(97897),
           P = n(57551);
         t.showGenerateSolutionPopup = async (e, t, n, I) => {
-          if (!o.AuthManager.instance.hasEnhancerAccess(!0)) return;
+          // if (!o.AuthManager.instance.hasEnhancerAccess(!0)) return;
           (0, P.clearPreviousSBCEnhancerData)();
           const T = (0, i.getFieldPlayers)(t.squad).map((e) => ({
               id: e.definitionId,

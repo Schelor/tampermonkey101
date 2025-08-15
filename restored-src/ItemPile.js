@@ -1,0 +1,18 @@
+const ItemPile = {
+  0: "ANY",
+  5: "TRANSFER",
+  6: "PURCHASED",
+  7: "CLUB",
+  8: "INBOX",
+  9: "GIFT",
+  10: "STORAGE",
+  11: "EVOLUTION",
+  ANY: 0,
+  TRANSFER: 5,
+  PURCHASED: 6,
+  CLUB: 7,
+  INBOX: 8,
+  GIFT: 9,
+  STORAGE: 10,
+  EVOLUTION: 11,
+};

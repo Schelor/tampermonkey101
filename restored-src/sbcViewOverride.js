@@ -95,6 +95,7 @@ export const sbcViewOverride = () => {
     this.custom_fillSBCBtn = createButton({
       label: "Auto fill",
       onClick: async () => {
+        // https://futnext.com?sbcId=3916&players=227310,247679,233084,270409,227421,237673,244302,199503,212622,239837,134481740
         const solutionUrl = this.custom_sbcIdInput?.getValue();
         if (solutionUrl) {
           await applySolution(sbcChallenge, solutionUrl);

@@ -29,7 +29,7 @@
   "description": "Enhances your experience with FC 25 web app",
   "update_url": "https://clients2.google.com/service/update2/crx",
   "manifest_version": 3,
-  "name": "FC25 Enhancer | SBC Solver, Trader & Keyboard Shortcuts",
+  "name": "Local FC25 Enhancer",
   "web_accessible_resources": [
     {
       "resources": ["js/vendor.js", "js/main.js", "header_image.png"],
